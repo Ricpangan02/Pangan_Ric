@@ -1,11 +1,26 @@
-import React from 'react';
-import LoginPage from './LoginPage'; 
+import React, { useState } from 'react';
+import LandingPage from './LandingPage';
+import LoginPage from './LoginPage';
+import DashboardPage from './DashboardPage';
 
 function App() {
+  const [view, setView] = useState('landing'); // 'landing' | 'login' | 'dashboard'
+
   return (
-    <div>
-      <LoginPage />
-    </div>
+    <>
+      {view === 'landing' && (
+        <LandingPage onLoginClick={() => setView('login')} />
+      )}
+      {view === 'login' && (
+        <LoginPage
+          onBackClick={() => setView('landing')}
+          onLoginSuccess={() => setView('dashboard')}
+        />
+      )}
+      {view === 'dashboard' && (
+        <DashboardPage onLogout={() => setView('landing')} />
+      )}
+    </>
   );
 }
 
